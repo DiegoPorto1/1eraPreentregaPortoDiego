@@ -7,6 +7,7 @@ import cartRouter from '../routes/carts.routes.js'
     constructor (id){
         this.id = id
         this.products = []
+       
 
     }
  }
@@ -14,6 +15,7 @@ class CartManager {
     constructor(){
     
         this.carts = []
+        this.path= config.PRODUCTS_FILE_PATH_CART
     }
 
     clearCart () {
@@ -21,9 +23,9 @@ class CartManager {
         this.carts.push(cart)
         return cart
     }
-    getCartById (id)
-    {
-        const cart = this.carts.find(carrito => carrito.id === id)
+    getCartById = async (id) => {
+        const carts = JSON.parse ( await fs.readFile (this.path, 'utf-8'))
+        const cart = carts.find(carrito => carrito.id === id)
         if(cart)
         return cart
     else 
@@ -42,7 +44,20 @@ class CartManager {
 
     return true
     }
+    async createCart() {
+        const cart = this.clearCart();
+        const cartsJSON = JSON.stringify(this.carts);
 
+        try {
+            await fs.writeFile(this.path, cartsJSON, 'utf-8');
+            return cart;
+        } catch (error) {
+            console.error("Error creating cart:", error);
+            return null;
+        }
+    }
 }
+
+
 
 export default CartManager
