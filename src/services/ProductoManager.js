@@ -27,11 +27,11 @@ class ProductManager {
         }
       
     }
-    getProductById = async (id) => {
+    getProductsById = async (id) => {
         const prods = JSON.parse( await fs.readFile(this.path, 'utf-8'));
         const prod = prods.find ( prod => prod.id === id)
         if (prod) {
-            console.log (prod)
+            return prod
         } else {
             console.log ("Producto no encontrado")
         }

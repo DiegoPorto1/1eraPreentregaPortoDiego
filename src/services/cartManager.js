@@ -1,5 +1,7 @@
  import crypto from 'crypto'
-import cartRouter from '../routes/carts.routes'
+ import { promises as fs} from 'fs'
+import config from '../config.js'  
+import cartRouter from '../routes/carts.routes.js'
 
  class Cart {
     constructor (id){
@@ -8,7 +10,7 @@ import cartRouter from '../routes/carts.routes'
 
     }
  }
-class cartManager {
+class CartManager {
     constructor(){
     
         this.carts = []
@@ -42,3 +44,5 @@ class cartManager {
     }
 
 }
+
+export default CartManager
